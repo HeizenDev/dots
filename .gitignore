@@ -1,0 +1,21 @@
+# editor / OS noise
+*~
+*.swp
+*.swo
+.DS_Store
+
+# local temp
+install.log
+*.log
+
+# local state and backups
+*.backup.*
+.cache/
+.local/
+
+# private machine data
+secrets/
+private/
+*.key
+*.pem
+*.pub

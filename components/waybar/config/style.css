@@ -1,0 +1,108 @@
+@import url("colors.css");
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: JetBrainsMono Nerd Font, sans-serif;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: alpha(@bg, 0.94);
+  color: @fg;
+}
+
+#waybar {
+  margin: 8px;
+}
+
+#workspaces,
+#window,
+#cpu,
+#memory,
+#custom-backlight,
+#pulseaudio,
+#network,
+#custom-keyboard-layout,
+#custom-bluetooth,
+#custom-battery,
+#clock {
+  background: @bg2;
+  border: 1px solid @border;
+  border-radius: 12px;
+  margin: 4px 4px;
+}
+
+#workspaces button {
+  padding: 0 10px;
+  margin: 3px 4px;
+  border-radius: 10px;
+  color: @muted;
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: @bg;
+  background: linear-gradient(90deg, @accent2, @accent);
+}
+
+#workspaces button.urgent {
+  color: @bg;
+  background: @accent;
+}
+
+#window,
+#cpu,
+#memory,
+#custom-backlight,
+#pulseaudio,
+#network,
+#custom-keyboard-layout,
+#custom-bluetooth,
+#custom-battery,
+#clock {
+  padding: 0 12px;
+  min-height: 28px;
+}
+
+#window {
+  color: @muted;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+#clock {
+  color: @fg;
+  border-color: @accent2;
+}
+
+#cpu,
+#memory,
+#custom-backlight,
+#pulseaudio,
+#network,
+#custom-keyboard-layout,
+#custom-bluetooth,
+#custom-battery {
+  color: @fg;
+}
+
+#pulseaudio.muted,
+#network.disconnected {
+  color: @accent;
+}
+
+#custom-battery {
+  border-color: @accent;
+}
+
+tooltip {
+  background: @bg;
+  border: 1px solid @border;
+  border-radius: 10px;
+}
+
+tooltip label {
+  color: @fg;
+}

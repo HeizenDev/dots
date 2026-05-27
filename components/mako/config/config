@@ -1,0 +1,18 @@
+font=JetBrainsMono Nerd Font 10
+width=360
+height=120
+margin=12
+padding=12
+border-size=1
+border-radius=10
+default-timeout=5000
+ignore-timeout=0
+anchor=top-right
+background-color=#111318ee
+text-color=#e7edf5ff
+border-color=#2a313dff
+progress-color=over #33ccffff
+
+[urgency=high]
+border-color=#00ff99ff
+default-timeout=0

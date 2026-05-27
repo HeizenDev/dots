@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
+
+for theme_dir in "$repo_dir"/themes/*; do
+  [ -d "$theme_dir" ] || continue
+  [ -f "$theme_dir/colors.env" ] || continue
+  basename -- "$theme_dir"
+done

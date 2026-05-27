@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+dots_repo_dir() {
+  if [ -n "${DOTS_DIR:-}" ]; then
+    printf '%s\n' "$DOTS_DIR"
+  else
+    script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+    cd -- "$(dirname -- "$script_path")/.." && pwd
+  fi
+}
+
+dots_run() {
+  if [ "${DOTS_DRY_RUN:-0}" = 1 ]; then
+    printf '[dry-run]'
+    printf ' %q' "$@"
+    printf '\n'
+  else
+    "$@"
+  fi
+}
+
+dots_link() {
+  src="$1"
+  dest="$2"
+  dest_dir="$(dirname -- "$dest")"
+
+  dots_run mkdir -p "$dest_dir"
+
+  if [ -L "$dest" ] && [ "$(readlink -- "$dest")" = "$src" ]; then
+    printf 'Already linked: %s\n' "$dest"
+    return 0
+  fi
+
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    backup="$dest.backup.$(date +%Y%m%d%H%M%S)"
+    dots_run mv "$dest" "$backup"
+  fi
+
+  dots_run ln -s "$src" "$dest"
+}
+
+dots_copy() {
+  src="$1"
+  dest="$2"
+  dots_run mkdir -p "$(dirname -- "$dest")"
+
+  if [ -e "$dest" ] && cmp -s "$src" "$dest"; then
+    printf 'Already current: %s\n' "$dest"
+    return 0
+  fi
+
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    backup="$dest.backup.$(date +%Y%m%d%H%M%S)"
+    dots_run mv "$dest" "$backup"
+  fi
+
+  dots_run cp "$src" "$dest"
+}

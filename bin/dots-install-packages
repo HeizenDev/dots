@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
+
+if [ "$#" -eq 0 ]; then
+  printf 'Usage: dots-install-packages <group>...\n' >&2
+  exit 2
+fi
+
+packages=()
+
+for group in "$@"; do
+  file="$repo_dir/packages/$group.txt"
+  if [ ! -f "$file" ]; then
+    printf 'Package group not found: %s\n' "$group" >&2
+    exit 1
+  fi
+
+  while IFS= read -r line; do
+    line="${line%%#*}"
+    line="${line//[$'\t\r\n ']/}"
+    [ -n "$line" ] || continue
+    packages+=("$line")
+  done < "$file"
+done
+
+if [ "${#packages[@]}" -eq 0 ]; then
+  printf 'No packages selected.\n'
+  exit 0
+fi
+
+command=(sudo pacman -S --needed)
+if [ "${DOTS_ASSUME_YES:-0}" = 1 ]; then
+  command+=(--noconfirm)
+fi
+command+=("${packages[@]}")
+
+if [ "${DOTS_DRY_RUN:-0}" = 1 ]; then
+  printf '[dry-run]'
+  printf ' %q' "${command[@]}"
+  printf '\n'
+else
+  "${command[@]}"
+fi

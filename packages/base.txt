@@ -1,0 +1,7 @@
+git
+base-devel
+curl
+rsync
+less
+unzip
+pacman-contrib

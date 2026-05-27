@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
+component="${1:-}"
+
+if [ -z "$component" ]; then
+  printf 'Usage: dots-install-component <component>\n' >&2
+  exit 2
+fi
+
+script="$repo_dir/components/$component/install.sh"
+if [ ! -x "$script" ]; then
+  printf 'Component is missing or not executable: %s\n' "$component" >&2
+  exit 1
+fi
+
+DOTS_DIR="$repo_dir" "$script"

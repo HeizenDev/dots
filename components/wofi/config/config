@@ -1,0 +1,13 @@
+show=drun
+location=center
+width=30%
+height=320
+insensitive=true
+allow_images=false
+allow_markup=false
+gtk_dark=true
+prompt=
+term=kitty
+key_expand=Tab
+show_all=true
+style=~/.config/wofi/style.css

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+missing=0
+
+check() {
+  if command -v "$1" >/dev/null 2>&1; then
+    printf 'ok: %s\n' "$1"
+  else
+    printf 'missing: %s\n' "$1"
+    missing=1
+  fi
+}
+
+check hyprland
+check hyprctl
+check waybar
+check wofi
+check mako
+check kitty
+check grim
+check slurp
+check wl-copy
+check notify-send
+
+exit "$missing"

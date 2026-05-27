@@ -1,0 +1,99 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 38,
+  "margin": 0,
+  "spacing": 0,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["cpu", "memory", "custom/backlight", "pulseaudio", "network", "custom/keyboard-layout", "custom/bluetooth", "custom/battery", "clock"],
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "十"
+    },
+    "all-outputs": true,
+    "persistent-workspaces": {
+      "*": 5
+    }
+  },
+
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 48,
+    "separate-outputs": true
+  },
+
+  "cpu": {
+    "format": "   {usage}%",
+    "interval": 2,
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": "   {percentage}%",
+    "interval": 5,
+    "tooltip": false
+  },
+
+  "custom/backlight": {
+    "exec-if": "bash -lc 'shopt -s nullglob; set -- /sys/class/backlight/*; [ $# -gt 0 ]'",
+    "exec": "bash -lc 'for dev in /sys/class/backlight/*; do [ -d \"$dev\" ] || continue; max=$(cat \"$dev/max_brightness\"); cur=$(cat \"$dev/brightness\"); [ \"$max\" -gt 0 ] || continue; pct=$((cur * 100 / max)); printf \"%s%%\\n\" \"$pct\"; break; done'",
+    "interval": 5,
+    "format": "󰃠   {}",
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "󰕾  {volume}%",
+    "format-muted": "󰝟  mute",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-wifi": "󰤨  {essid} {signalStrength}%",
+    "format-ethernet": "󰈀  wired",
+    "format-disconnected": "󰖪  offline",
+    "format-linked": "󰈀  {ifname}",
+    "tooltip": false
+  },
+
+  "custom/keyboard-layout": {
+    "exec": "bash -lc 'layout=$(hyprctl devices 2>/dev/null | awk -F\": \" \"/active keymap/ {print $2; exit}\"); case \"$layout\" in *English*) printf \"󰌌  EN\\n\" ;; *Spanish*) printf \"󰌌  ES\\n\" ;; *) printf \"󰌌  %s\\n\" \"${layout:---}\" ;; esac'",
+    "interval": 1,
+    "format": "{}",
+    "tooltip": false
+  },
+
+  "custom/bluetooth": {
+    "exec-if": "bash -lc 'command -v bluetoothctl >/dev/null 2>&1 && bluetoothctl show >/dev/null 2>&1'",
+    "exec": "bash -lc 'state=$(bluetoothctl show 2>/dev/null | awk -F\": \" \"/Powered:/ {print $2; exit}\"); if [ \"$state\" = yes ]; then printf \"on\\n\"; else printf \"off\\n\"; fi'",
+    "interval": 10,
+    "format": "󰂯   {}",
+    "tooltip": false
+  },
+
+  "custom/battery": {
+    "exec-if": "bash -lc 'shopt -s nullglob; set -- /sys/class/power_supply/BAT*; [ $# -gt 0 ]'",
+    "exec": "bash -lc 'for bat in /sys/class/power_supply/BAT*; do [ -d \"$bat\" ] || continue; cap=$(cat \"$bat/capacity\"); status=$(cat \"$bat/status\"); printf \"%s%% %s\\n\" \"$cap\" \"$status\"; break; done'",
+    "interval": 30,
+    "format": "󰁹   {}",
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "󰥔   {:%a %d %b  %H:%M}",
+    "tooltip": true,
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  }
+}

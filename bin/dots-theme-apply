@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
+theme="${1:-current}"
+theme_file="$repo_dir/themes/$theme/colors.env"
+
+if [ ! -f "$theme_file" ]; then
+  printf 'Theme not found: %s\n' "$theme" >&2
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+source "$theme_file"
+
+write_file() {
+  dest="$1"
+  content="$2"
+
+  if [ "${DOTS_DRY_RUN:-0}" = 1 ]; then
+    printf '[dry-run] write %s\n' "$dest"
+    return 0
+  fi
+
+  mkdir -p "$(dirname -- "$dest")"
+  printf '%s\n' "$content" >"$dest"
+}
+
+hex() {
+  printf '%s' "${1#\#}"
+}
+
+write_file "$HOME/.config/hypr/colors.conf" "\$themeAccentGradient = rgba($(hex "$BASE_ACCENT_ALT")ee) rgba($(hex "$BASE_ACCENT")ee) 45deg
+\$themeNeutralLine = rgba($(hex "$BASE_NEUTRAL")aa)
+\$themeShadow = rgba($(hex "$BASE_SHADOW")ee)"
+
+write_file "$HOME/.config/kitty/colors.conf" "background $BASE_BG
+foreground $BASE_TEXT
+selection_background $BASE_ACCENT_ALT
+selection_foreground $BASE_BG
+cursor $BASE_ACCENT
+url_color $BASE_ACCENT_ALT
+
+active_border_color $BASE_ACCENT_ALT
+inactive_border_color $BASE_EDGE
+bell_border_color $BASE_ACCENT
+
+active_tab_background $BASE_ACCENT_ALT
+active_tab_foreground $BASE_BG
+inactive_tab_background $BASE_SURFACE
+inactive_tab_foreground $BASE_TEXT"
+
+write_file "$HOME/.config/waybar/colors.css" "@define-color bg $BASE_BG;
+@define-color bg2 $BASE_SURFACE;
+@define-color fg $BASE_TEXT;
+@define-color muted $BASE_DIM;
+@define-color accent $BASE_ACCENT;
+@define-color accent2 $BASE_ACCENT_ALT;
+@define-color border $BASE_EDGE;"
+
+write_file "$HOME/.config/wofi/style.css" "window {
+  background-color: $BASE_BG;
+  color: $BASE_TEXT;
+  border: 1px solid $BASE_EDGE;
+  border-radius: 14px;
+}
+
+#outer-box,
+#inner-box {
+  margin: 0;
+  padding: 8px;
+  background-color: transparent;
+}
+
+#input {
+  margin: 8px;
+  padding: 8px 10px;
+  border: 1px solid $BASE_EDGE;
+  border-radius: 10px;
+  background-color: $BASE_SURFACE;
+  color: $BASE_TEXT;
+}
+
+#entry {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  color: $BASE_TEXT;
+}
+
+#entry:selected {
+  background-color: $BASE_ACCENT_ALT;
+  color: $BASE_BG;
+}
+
+#text {
+  color: inherit;
+}
+
+#img {
+  margin-right: 8px;
+}"
+
+printf 'Applied theme: %s\n' "$theme"

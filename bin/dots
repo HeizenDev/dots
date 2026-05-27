@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
+repo_dir="$(cd -- "$(dirname -- "$script_path")/.." && pwd)"
+command="${1:-help}"
+
+case "$command" in
+  install)
+    shift
+    if [ "${1:-}" = "all" ]; then
+      shift
+      "$repo_dir/install.sh" --all "$@"
+    elif [ "${1:-}" = "packages" ]; then
+      shift
+      "$repo_dir/install.sh" --packages "${*// /,}"
+    elif [ "$#" -gt 0 ]; then
+      components="$*"
+      "$repo_dir/install.sh" --component "${components// /,}"
+    else
+      "$repo_dir/install.sh" --help
+      exit 2
+    fi
+    ;;
+  theme)
+    shift
+    subcommand="${1:-}"
+    case "$subcommand" in
+      apply)
+        shift
+        "$repo_dir/bin/dots-theme-apply" "${1:-current}"
+        ;;
+      list)
+        "$repo_dir/bin/dots-theme-list"
+        ;;
+      current)
+        "$repo_dir/bin/dots-theme-current"
+        ;;
+      *)
+        printf 'Usage: dots theme {apply|list|current} [theme]\n' >&2
+        exit 2
+        ;;
+    esac
+    ;;
+  doctor)
+    "$repo_dir/bin/dots-doctor"
+    ;;
+  services)
+    shift
+    if [ "${1:-}" = "enable" ]; then
+      DOTS_DRY_RUN="${DOTS_DRY_RUN:-0}" "$repo_dir/bin/dots-enable-services"
+    else
+      printf 'Usage: dots services enable\n' >&2
+      exit 2
+    fi
+    ;;
+  help|-h|--help)
+    cat <<'USAGE'
+Usage:
+  dots install all
+  dots install packages base desktop fonts
+  dots install hypr waybar kitty
+  dots theme apply [theme]
+  dots theme list
+  dots theme current
+  dots services enable
+  dots doctor
+USAGE
+    ;;
+  *)
+    printf 'Unknown command: %s\n' "$command" >&2
+    exit 2
+    ;;
+esac
