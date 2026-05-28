@@ -1,8 +1,8 @@
 # AGENTS.md
 
 ## Source Of Truth
-- Trust `install.sh`, `bin/dots*`, `bin/dots-lib`, `hosts/current/*`, `packages/*.txt`, and `themes/*/colors.env` over README/docs when they conflict.
-- The active theme lives in `themes/current/colors.env` and exports `BASE_*` shell variables; `install.sh --theme` reads that file, not TOML.
+- Trust `install.sh`, `bin/dots*`, `bin/dots-lib`, `hosts/current/*`, `packages/*.txt`, and `themes/*/colors.toml` over README/docs when they conflict.
+- Themes live in `themes/<name>/colors.toml` and define colors under `[colors]`; `install.sh --theme` reads that TOML file.
 - `components/<name>/install.sh` scripts are the real per-component entrypoints.
 
 ## Commands
@@ -15,7 +15,7 @@
 ## Layout And Behavior
 - Component installers source `bin/dots-lib` and use `dots_link`/`dots_copy`; existing targets are backed up as `*.backup.<timestamp>` before replacement.
 - Theme application writes generated files into `~/.config/hypr`, `~/.config/kitty`, `~/.config/waybar`, and `~/.config/wofi`; do not hand-edit those outputs.
-- `components/theme/install.sh` links the active palette and apply script into `~/.config/theme` and then applies the current theme.
+- `components/theme/install.sh` links the active palette and apply script into `~/.config/theme`; `install.sh --theme` applies the theme.
 - `bin/dots-install-packages` reads plain text package group files and strips comments/whitespace before calling `sudo pacman -S --needed`.
 - `bin/dots-enable-services` enables `NetworkManager`, `bluetooth`, and `sddm` only if the unit exists.
 

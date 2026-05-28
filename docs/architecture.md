@@ -40,21 +40,23 @@ Current components:
 - `wofi`: Wofi launcher config.
 - `kitty`: Kitty terminal config.
 - `mako`: Mako notification config.
+- `nvim`: Neovim package installation and LazyVim-based config.
+- `opencode`: Official opencode installer without managed config.
 - `theme`: links theme files into `~/.config/theme` and applies the current palette.
 
 Each component has an executable `install.sh`. Functional configuration is symlinked into `~/.config`. Existing target files are backed up as `*.backup.<timestamp>` before replacement.
 
 ## Themes
 
-Themes live under `themes/<name>/colors.env`.
+Themes live under `themes/<name>/colors.toml`.
 
 The current default is:
 
 ```text
-themes/current/colors.env
+themes/current/colors.toml
 ```
 
-The theme file exports shell variables such as `BASE_BG`, `BASE_TEXT`, `BASE_ACCENT`, and `BASE_EDGE`. `bin/dots-theme-apply` sources that file and writes generated output to:
+The theme file defines a `[colors]` table with keys such as `bg`, `text`, `accent`, and `edge`. `bin/dots-theme-apply` reads that file and writes generated output to:
 
 - `~/.config/hypr/colors.conf`
 - `~/.config/kitty/colors.conf`

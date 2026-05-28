@@ -26,6 +26,7 @@ Use HTTPS instead of SSH if the VM does not have GitHub SSH keys configured.
 ./install.sh --all
 ./install.sh --packages base,desktop,fonts
 ./install.sh --component hypr,waybar,kitty
+./install.sh --component nvim,opencode
 ./install.sh --theme current
 ./bin/dots doctor
 ```
@@ -45,7 +46,7 @@ The `dots` helper provides the same daily operations:
 ## Customize
 
 - Edit component configs in `components/<name>/config/`.
-- Edit shared colors in `themes/current/colors.env`.
+- Edit shared colors in `themes/current/colors.toml`.
 - Edit installed package groups in `packages/*.txt`.
 - Edit default host selections in `hosts/current/`.
 

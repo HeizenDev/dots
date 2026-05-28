@@ -9,6 +9,8 @@ Components are independently installable units under `components/<name>/`.
 - `wofi`: Wofi launcher config.
 - `kitty`: Kitty config split into fonts, keys, tabs, window, and main include file.
 - `mako`: Notification daemon config.
+- `nvim`: Neovim package installation and local LazyVim-based config.
+- `opencode`: Official opencode installer without repository-managed config.
 - `theme`: Links palette files and applies generated theme output.
 
 ## Layout
@@ -43,6 +45,8 @@ Each `components/<name>/install.sh` should:
 4. Add required packages to the relevant `packages/*.txt` group.
 5. Add the component name to `COMPONENTS` in `hosts/current/components.conf` if it should be installed by `--all`.
 6. Run `./install.sh --component <name> --dry-run`.
+
+Components may install their own required packages when a package group is not the right fit. Prefer distro packages for distro-provided tools and keep external installers explicit in the component script.
 
 ## Hyprland Note
 

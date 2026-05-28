@@ -15,7 +15,7 @@ Options:
   --all                  Install default host packages, components, and theme.
   --packages LIST        Install comma-separated package groups.
   --component LIST       Install comma-separated components.
-  --theme NAME           Apply a theme from themes/<name>/colors.env.
+  --theme NAME           Apply a theme from themes/<name>/colors.toml.
   --dry-run              Print actions without changing files.
   --yes                  Pass --noconfirm to pacman.
   -h, --help             Show this help.
@@ -76,6 +76,7 @@ fi
 export DOTS_DIR="$repo_dir"
 export DOTS_DRY_RUN="$dry_run"
 export DOTS_ASSUME_YES="$assume_yes"
+export DOTS_THEME="${theme:-current}"
 
 if [ -n "$packages" ]; then
   packages="${packages//,/ }"

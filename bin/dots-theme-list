@@ -6,6 +6,6 @@ repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
 
 for theme_dir in "$repo_dir"/themes/*; do
   [ -d "$theme_dir" ] || continue
-  [ -f "$theme_dir/colors.env" ] || continue
+  [ -f "$theme_dir/colors.toml" ] || continue
   basename -- "$theme_dir"
 done

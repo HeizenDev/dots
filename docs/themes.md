@@ -4,27 +4,28 @@ Themes provide shared colors for Hyprland, Kitty, Waybar, Wofi, and the legacy `
 
 ## Theme Format
 
-Each theme is a directory under `themes/` with a `colors.env` file:
+Each theme is a directory under `themes/` with a `colors.toml` file:
 
 ```text
-themes/current/colors.env
+themes/current/colors.toml
 ```
 
-The file is sourced by shell scripts and must use simple `KEY=value` assignments:
+The file is parsed by shell scripts and must use a simple TOML `[colors]` table:
 
 ```bash
-BASE_BG=#111318
-BASE_SURFACE=#171b22
-BASE_TEXT=#e7edf5
-BASE_DIM=#8b96a5
-BASE_ACCENT=#00ff99
-BASE_ACCENT_ALT=#33ccff
-BASE_EDGE=#2a313d
-BASE_SHADOW=#1a1a1a
-BASE_NEUTRAL=#595959
+[colors]
+bg = "#111318"
+surface = "#171b22"
+text = "#e7edf5"
+dim = "#8b96a5"
+accent = "#00ff99"
+accent_alt = "#33ccff"
+edge = "#2a313d"
+shadow = "#1a1a1a"
+neutral = "#595959"
 ```
 
-Do not use TOML for themes in the current implementation.
+Only quoted string values in the `[colors]` table are supported by the current implementation.
 
 ## Applying A Theme
 
@@ -51,12 +52,12 @@ Applying a theme writes these files:
 
 The `theme` component also links:
 
-- `~/.config/theme/palette.env` to `themes/current/colors.env`
+- `~/.config/theme/palette.toml` to the active `themes/<name>/colors.toml`
 - `~/.config/theme/apply-theme.sh` to `bin/dots-theme-apply`
 
 ## Editing Colors
 
-Edit `themes/current/colors.env`, then run:
+Edit `themes/current/colors.toml`, then run:
 
 ```bash
 ./bin/dots theme apply current

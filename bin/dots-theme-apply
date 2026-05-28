@@ -4,15 +4,68 @@ set -euo pipefail
 script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
 repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
 theme="${1:-current}"
-theme_file="$repo_dir/themes/$theme/colors.env"
+theme_file="$repo_dir/themes/$theme/colors.toml"
 
 if [ ! -f "$theme_file" ]; then
   printf 'Theme not found: %s\n' "$theme" >&2
   exit 1
 fi
 
-# shellcheck disable=SC1090
-source "$theme_file"
+load_theme() {
+  in_colors=0
+
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^[[:space:]]*\[colors\][[:space:]]*$ ]]; then
+      in_colors=1
+      continue
+    fi
+
+    if [[ "$line" =~ ^[[:space:]]*\[.*\][[:space:]]*$ ]]; then
+      in_colors=0
+      continue
+    fi
+
+    [ "$in_colors" = 1 ] || continue
+
+    if [[ "$line" =~ ^[[:space:]]*([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\"([^\"]*)\"[[:space:]]*$ ]]; then
+      key="${BASH_REMATCH[1]}"
+      value="${BASH_REMATCH[2]}"
+
+      case "$key" in
+        bg) BASE_BG="$value" ;;
+        surface) BASE_SURFACE="$value" ;;
+        text) BASE_TEXT="$value" ;;
+        dim) BASE_DIM="$value" ;;
+        accent) BASE_ACCENT="$value" ;;
+        accent_alt) BASE_ACCENT_ALT="$value" ;;
+        edge) BASE_EDGE="$value" ;;
+        shadow) BASE_SHADOW="$value" ;;
+        neutral) BASE_NEUTRAL="$value" ;;
+      esac
+    fi
+  done < "$theme_file"
+}
+
+require_color() {
+  name="$1"
+  value="$2"
+
+  if [ -z "$value" ]; then
+    printf 'Missing theme color: %s in %s\n' "$name" "$theme_file" >&2
+    exit 1
+  fi
+}
+
+load_theme
+require_color bg "${BASE_BG:-}"
+require_color surface "${BASE_SURFACE:-}"
+require_color text "${BASE_TEXT:-}"
+require_color dim "${BASE_DIM:-}"
+require_color accent "${BASE_ACCENT:-}"
+require_color accent_alt "${BASE_ACCENT_ALT:-}"
+require_color edge "${BASE_EDGE:-}"
+require_color shadow "${BASE_SHADOW:-}"
+require_color neutral "${BASE_NEUTRAL:-}"
 
 write_file() {
   dest="$1"
