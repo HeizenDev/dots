@@ -1,13 +1,13 @@
 # Themes
 
-Themes provide shared colors for Hyprland, Kitty, Waybar, Wofi, and the legacy `~/.config/theme` location.
+Themes provide shared colors for Hyprland, Kitty, Waybar, Wofi, Neovim, and the legacy `~/.config/theme` location.
 
 ## Theme Format
 
 Each theme is a directory under `themes/` with a `colors.toml` file:
 
 ```text
-themes/current/colors.toml
+themes/tokyo-night/colors.toml
 ```
 
 The file is parsed by shell scripts and must use a simple TOML `[colors]` table:
@@ -25,20 +25,20 @@ shadow = "#1a1a1a"
 neutral = "#595959"
 ```
 
-Only quoted string values in the `[colors]` table are supported by the current implementation.
+Only quoted string values in the `[colors]` table are supported by the current implementation. Theme application fails before writing generated files if any required key is missing.
 
 ## Applying A Theme
 
 Apply the default theme:
 
 ```bash
-./bin/dots theme apply current
+./bin/dots theme apply tokyo-night
 ```
 
 Equivalent installer command:
 
 ```bash
-./install.sh --theme current
+./install.sh --theme tokyo-night
 ```
 
 ## Generated Files
@@ -49,6 +49,12 @@ Applying a theme writes these files:
 - `~/.config/kitty/colors.conf`
 - `~/.config/waybar/colors.css`
 - `~/.config/wofi/style.css`
+- `~/.config/opencode/tui.json`
+- `~/.config/opencode/themes/dots.json`
+
+Neovim uses the LazyVim colorscheme setting `dots`. That colorscheme reads `~/.config/theme/palette.toml` at startup and applies matching highlights from the active palette.
+
+opencode uses the generated `dots` theme selected by `~/.config/opencode/tui.json`.
 
 The `theme` component also links:
 
@@ -57,10 +63,10 @@ The `theme` component also links:
 
 ## Editing Colors
 
-Edit `themes/current/colors.toml`, then run:
+Edit a theme under `themes/<name>/colors.toml`, then run:
 
 ```bash
-./bin/dots theme apply current
+./bin/dots theme apply tokyo-night
 ```
 
 Generated files should not be edited directly because the next theme apply will overwrite them.

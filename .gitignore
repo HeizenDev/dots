@@ -12,6 +12,8 @@ install.log
 *.backup.*
 .cache/
 .local/
+SESSION_HANDOFF.md
+TODO.md
 
 # private machine data
 secrets/

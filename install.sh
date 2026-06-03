@@ -9,7 +9,7 @@ Usage:
   ./install.sh --all [--dry-run]
   ./install.sh --packages base,desktop [--dry-run]
   ./install.sh --component hypr,waybar [--dry-run]
-  ./install.sh --theme current [--dry-run]
+  ./install.sh --theme tokyo-night [--dry-run]
 
 Options:
   --all                  Install default host packages, components, and theme.
@@ -35,7 +35,7 @@ while [ "$#" -gt 0 ]; do
       source "$repo_dir/hosts/current/components.conf"
       packages="$(tr '\n' ' ' < "$repo_dir/hosts/current/packages.txt")"
       components="$COMPONENTS"
-      theme="${THEME:-current}"
+      theme="${THEME:-tokyo-night}"
       ;;
     --packages)
       packages="${2:-}"
@@ -76,7 +76,7 @@ fi
 export DOTS_DIR="$repo_dir"
 export DOTS_DRY_RUN="$dry_run"
 export DOTS_ASSUME_YES="$assume_yes"
-export DOTS_THEME="${theme:-current}"
+export DOTS_THEME="${theme:-tokyo-night}"
 
 if [ -n "$packages" ]; then
   packages="${packages//,/ }"

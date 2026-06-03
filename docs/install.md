@@ -47,7 +47,7 @@ Install selected components only:
 Apply a theme only:
 
 ```bash
-./install.sh --theme current
+./install.sh --theme tokyo-night
 ```
 
 Use `--yes` to pass `--noconfirm` to `pacman` during package installation:
@@ -66,7 +66,7 @@ The helper command wraps common operations:
 ./bin/dots install hypr waybar kitty
 ./bin/dots theme list
 ./bin/dots theme current
-./bin/dots theme apply current
+./bin/dots theme apply tokyo-night
 ./bin/dots services enable
 ./bin/dots doctor
 ```

@@ -8,7 +8,7 @@
 ## Commands
 - `./install.sh --all` installs `hosts/current/packages.txt`, `hosts/current/components.conf`, and the current theme.
 - `./install.sh --packages base,desktop` and `./install.sh --component hypr,waybar` take comma-separated lists.
-- `./install.sh --theme current` applies a theme; `--dry-run` prints actions; `--yes` adds `--noconfirm` to `pacman`.
+- `./install.sh --theme tokyo-night` applies a theme; `--dry-run` prints actions; `--yes` adds `--noconfirm` to `pacman`.
 - `./bin/dots` is the user-facing wrapper: `dots install ...`, `dots theme {apply|list|current}`, `dots services enable`, `dots doctor`.
 - Use `./bin/dots doctor` and the relevant `install.sh --dry-run` path to verify changes.
 

@@ -28,7 +28,7 @@ case "$command" in
     case "$subcommand" in
       apply)
         shift
-        "$repo_dir/bin/dots-theme-apply" "${1:-current}"
+        "$repo_dir/bin/dots-theme-apply" "${1:-tokyo-night}"
         ;;
       list)
         "$repo_dir/bin/dots-theme-list"

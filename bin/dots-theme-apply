@@ -3,7 +3,7 @@ set -euo pipefail
 
 script_path="$(readlink -f -- "${BASH_SOURCE[0]}")"
 repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "$script_path")/.." && pwd)}"
-theme="${1:-current}"
+theme="${1:-tokyo-night}"
 theme_file="$repo_dir/themes/$theme/colors.toml"
 
 if [ ! -f "$theme_file" ]; then
@@ -46,26 +46,36 @@ load_theme() {
   done < "$theme_file"
 }
 
+missing_colors=()
+
 require_color() {
   name="$1"
   value="$2"
 
   if [ -z "$value" ]; then
-    printf 'Missing theme color: %s in %s\n' "$name" "$theme_file" >&2
+    missing_colors+=("$name")
+  fi
+}
+
+validate_theme() {
+  require_color bg "${BASE_BG:-}"
+  require_color surface "${BASE_SURFACE:-}"
+  require_color text "${BASE_TEXT:-}"
+  require_color dim "${BASE_DIM:-}"
+  require_color accent "${BASE_ACCENT:-}"
+  require_color accent_alt "${BASE_ACCENT_ALT:-}"
+  require_color edge "${BASE_EDGE:-}"
+  require_color shadow "${BASE_SHADOW:-}"
+  require_color neutral "${BASE_NEUTRAL:-}"
+
+  if [ "${#missing_colors[@]}" -gt 0 ]; then
+    printf 'Theme %s is missing required [colors] keys in %s: %s\n' "$theme" "$theme_file" "${missing_colors[*]}" >&2
     exit 1
   fi
 }
 
 load_theme
-require_color bg "${BASE_BG:-}"
-require_color surface "${BASE_SURFACE:-}"
-require_color text "${BASE_TEXT:-}"
-require_color dim "${BASE_DIM:-}"
-require_color accent "${BASE_ACCENT:-}"
-require_color accent_alt "${BASE_ACCENT_ALT:-}"
-require_color edge "${BASE_EDGE:-}"
-require_color shadow "${BASE_SHADOW:-}"
-require_color neutral "${BASE_NEUTRAL:-}"
+validate_theme
 
 write_file() {
   dest="$1"
@@ -80,9 +90,31 @@ write_file() {
   printf '%s\n' "$content" >"$dest"
 }
 
+link_palette() {
+  dest="$HOME/.config/theme/palette.toml"
+
+  if [ "${DOTS_DRY_RUN:-0}" = 1 ]; then
+    printf '[dry-run] link %s -> %s\n' "$dest" "$theme_file"
+    return 0
+  fi
+
+  mkdir -p "$(dirname -- "$dest")"
+  if [ -L "$dest" ] && [ "$(readlink -- "$dest")" = "$theme_file" ]; then
+    return 0
+  fi
+
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    mv "$dest" "$dest.backup.$(date +%Y%m%d%H%M%S)"
+  fi
+
+  ln -s "$theme_file" "$dest"
+}
+
 hex() {
   printf '%s' "${1#\#}"
 }
+
+link_palette
 
 write_file "$HOME/.config/hypr/colors.conf" "\$themeAccentGradient = rgba($(hex "$BASE_ACCENT_ALT")ee) rgba($(hex "$BASE_ACCENT")ee) 45deg
 \$themeNeutralLine = rgba($(hex "$BASE_NEUTRAL")aa)
@@ -153,6 +185,67 @@ write_file "$HOME/.config/wofi/style.css" "window {
 
 #img {
   margin-right: 8px;
+}"
+
+write_file "$HOME/.config/opencode/tui.json" "{
+  \"\$schema\": \"https://opencode.ai/tui.json\",
+  \"theme\": \"dots\"
+}"
+
+write_file "$HOME/.config/opencode/themes/dots.json" "{
+  \"\$schema\": \"https://opencode.ai/theme.json\",
+  \"theme\": {
+    \"primary\": \"$BASE_ACCENT\",
+    \"secondary\": \"$BASE_ACCENT_ALT\",
+    \"accent\": \"$BASE_ACCENT\",
+    \"error\": \"$BASE_ACCENT_ALT\",
+    \"warning\": \"$BASE_NEUTRAL\",
+    \"success\": \"$BASE_ACCENT\",
+    \"info\": \"$BASE_ACCENT_ALT\",
+    \"text\": \"$BASE_TEXT\",
+    \"textMuted\": \"$BASE_DIM\",
+    \"background\": \"$BASE_BG\",
+    \"backgroundPanel\": \"$BASE_SURFACE\",
+    \"backgroundElement\": \"$BASE_SURFACE\",
+    \"border\": \"$BASE_EDGE\",
+    \"borderActive\": \"$BASE_ACCENT\",
+    \"borderSubtle\": \"$BASE_EDGE\",
+    \"diffAdded\": \"$BASE_ACCENT\",
+    \"diffRemoved\": \"$BASE_ACCENT_ALT\",
+    \"diffContext\": \"$BASE_DIM\",
+    \"diffHunkHeader\": \"$BASE_NEUTRAL\",
+    \"diffHighlightAdded\": \"$BASE_ACCENT\",
+    \"diffHighlightRemoved\": \"$BASE_ACCENT_ALT\",
+    \"diffAddedBg\": \"$BASE_SURFACE\",
+    \"diffRemovedBg\": \"$BASE_SURFACE\",
+    \"diffContextBg\": \"$BASE_BG\",
+    \"diffLineNumber\": \"$BASE_DIM\",
+    \"diffAddedLineNumberBg\": \"$BASE_SURFACE\",
+    \"diffRemovedLineNumberBg\": \"$BASE_SURFACE\",
+    \"markdownText\": \"$BASE_TEXT\",
+    \"markdownHeading\": \"$BASE_ACCENT\",
+    \"markdownLink\": \"$BASE_ACCENT_ALT\",
+    \"markdownLinkText\": \"$BASE_ACCENT\",
+    \"markdownCode\": \"$BASE_NEUTRAL\",
+    \"markdownBlockQuote\": \"$BASE_DIM\",
+    \"markdownEmph\": \"$BASE_ACCENT_ALT\",
+    \"markdownStrong\": \"$BASE_ACCENT\",
+    \"markdownHorizontalRule\": \"$BASE_EDGE\",
+    \"markdownListItem\": \"$BASE_ACCENT\",
+    \"markdownListEnumeration\": \"$BASE_ACCENT_ALT\",
+    \"markdownImage\": \"$BASE_ACCENT_ALT\",
+    \"markdownImageText\": \"$BASE_ACCENT\",
+    \"markdownCodeBlock\": \"$BASE_TEXT\",
+    \"syntaxComment\": \"$BASE_DIM\",
+    \"syntaxKeyword\": \"$BASE_ACCENT\",
+    \"syntaxFunction\": \"$BASE_ACCENT_ALT\",
+    \"syntaxVariable\": \"$BASE_TEXT\",
+    \"syntaxString\": \"$BASE_NEUTRAL\",
+    \"syntaxNumber\": \"$BASE_ACCENT_ALT\",
+    \"syntaxType\": \"$BASE_NEUTRAL\",
+    \"syntaxOperator\": \"$BASE_ACCENT\",
+    \"syntaxPunctuation\": \"$BASE_TEXT\"
+  }
 }"
 
 printf 'Applied theme: %s\n' "$theme"

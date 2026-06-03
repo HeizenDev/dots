@@ -2,7 +2,7 @@
 set -euo pipefail
 
 repo_dir="${DOTS_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)}"
-theme="${DOTS_THEME:-current}"
+theme="${DOTS_THEME:-tokyo-night}"
 # shellcheck disable=SC1091
 source "$repo_dir/bin/dots-lib"
 

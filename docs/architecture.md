@@ -53,7 +53,7 @@ Themes live under `themes/<name>/colors.toml`.
 The current default is:
 
 ```text
-themes/current/colors.toml
+themes/tokyo-night/colors.toml
 ```
 
 The theme file defines a `[colors]` table with keys such as `bg`, `text`, `accent`, and `edge`. `bin/dots-theme-apply` reads that file and writes generated output to:

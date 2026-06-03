@@ -1,0 +1,10 @@
+[colors]
+bg = "#1e1e2e"
+surface = "#313244"
+text = "#cdd6f4"
+dim = "#7f849c"
+accent = "#89b4fa"
+accent_alt = "#cba6f7"
+edge = "#45475a"
+shadow = "#11111b"
+neutral = "#a6adc8"
