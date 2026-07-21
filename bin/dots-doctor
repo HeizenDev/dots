@@ -17,7 +17,7 @@ check hyprctl
 check waybar
 check wofi
 check mako
-check kitty
+check alacritty
 check grim
 check slurp
 check wl-copy

@@ -2,7 +2,7 @@
 
 An opinionated Hyprland setup for developers.
 
-`dots` installs a minimal Wayland desktop with Hyprland, Waybar, Wofi, Mako, Kitty, shared theme colors, and developer-friendly defaults. It is inspired by projects like Omarchy, but smaller, more personal, and focused on my preferred workflow.
+`dots` installs a minimal Wayland desktop with Hyprland, Waybar, Wofi, Mako, Alacritty, shared theme colors, and developer-friendly defaults. It is inspired by projects like Omarchy, but smaller, more personal, and focused on my preferred workflow.
 
 ## Install
 
@@ -25,7 +25,7 @@ Use HTTPS instead of SSH if the VM does not have GitHub SSH keys configured.
 ```bash
 ./install.sh --all
 ./install.sh --packages base,desktop,fonts
-./install.sh --component hypr,waybar,kitty
+./install.sh --component hypr,waybar,alacritty
 ./install.sh --component nvim,opencode
 ./install.sh --theme tokyo-night
 ./bin/dots doctor
@@ -36,7 +36,7 @@ The `dots` helper provides the same daily operations:
 ```bash
 ./bin/dots install all
 ./bin/dots install packages base desktop fonts
-./bin/dots install hypr waybar kitty
+./bin/dots install hypr waybar alacritty
 ./bin/dots theme list
 ./bin/dots theme apply tokyo-night
 ./bin/dots services enable

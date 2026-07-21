@@ -38,7 +38,7 @@ Current components:
 - `hypr`: Hyprland config and screenshot script.
 - `waybar`: Waybar config and style.
 - `wofi`: Wofi launcher config.
-- `kitty`: Kitty terminal config.
+- `alacritty`: Alacritty terminal config (with `live_config_reload = true` and an import that loads the generated theme file).
 - `mako`: Mako notification config.
 - `nvim`: Neovim package installation and LazyVim-based config.
 - `opencode`: Official opencode installer without managed config.
@@ -59,7 +59,7 @@ themes/tokyo-night/colors.toml
 The theme file defines a `[colors]` table with keys such as `bg`, `text`, `accent`, and `edge`. `bin/dots-theme-apply` reads that file and writes generated output to:
 
 - `~/.config/hypr/colors.conf`
-- `~/.config/kitty/colors.conf`
+- `~/.config/alacritty/themes/<theme>.toml` and a `themes/active.toml` symlink
 - `~/.config/waybar/colors.css`
 - `~/.config/wofi/style.css`
 
@@ -74,7 +74,6 @@ Current groups:
 - `base`
 - `desktop`
 - `fonts`
-- `dev`
 
 `install.sh --packages base,desktop,fonts` calls `sudo pacman -S --needed` with all packages from those groups.
 

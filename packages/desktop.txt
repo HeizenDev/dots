@@ -5,7 +5,7 @@ xdg-user-dirs
 waybar
 wofi
 mako
-kitty
+alacritty
 dolphin
 qt5-wayland
 qt6-wayland

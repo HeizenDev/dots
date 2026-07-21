@@ -7,7 +7,7 @@ Components are independently installable units under `components/<name>/`.
 - `hypr`: Hyprland config and screenshot helper.
 - `waybar`: Waybar JSONC config and CSS style.
 - `wofi`: Wofi launcher config.
-- `kitty`: Kitty config split into fonts, keys, tabs, window, and main include file.
+- `alacritty`: Alacritty config with `live_config_reload = true` and an `import` that loads `~/.config/alacritty/themes/active.toml` (a symlink to the active palette's `themes/<theme>.toml`).
 - `mako`: Notification daemon config.
 - `nvim`: Neovim package installation and local LazyVim-based config.
 - `opencode`: Official opencode installer without repository-managed config.
@@ -47,6 +47,10 @@ Each `components/<name>/install.sh` should:
 6. Run `./install.sh --component <name> --dry-run`.
 
 Components may install their own required packages when a package group is not the right fit. Prefer distro packages for distro-provided tools and keep external installers explicit in the component script.
+
+## Alacritty Note
+
+The shipped `components/alacritty/config/alacritty.toml` sets `live_config_reload = true` in `[general]`. Alacritty watches the imported config files and applies changes without restarting. After a theme apply, all running alacritty windows update in place.
 
 ## Hyprland Note
 

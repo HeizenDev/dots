@@ -144,22 +144,6 @@ write_file "$HOME/.config/hypr/colors.conf" "\$themeAccentGradient = rgba($(hex 
 \$themeNeutralLine = rgba($(hex "$BASE_NEUTRAL")aa)
 \$themeShadow = rgba($(hex "$BASE_SHADOW")ee)"
 
-write_file "$HOME/.config/kitty/colors.conf" "background $BASE_BG
-foreground $BASE_TEXT
-selection_background $BASE_ACCENT_ALT
-selection_foreground $BASE_BG
-cursor $BASE_ACCENT
-url_color $BASE_ACCENT_ALT
-
-active_border_color $BASE_ACCENT_ALT
-inactive_border_color $BASE_EDGE
-bell_border_color $BASE_ACCENT
-
-active_tab_background $BASE_ACCENT_ALT
-active_tab_foreground $BASE_BG
-inactive_tab_background $BASE_SURFACE
-inactive_tab_foreground $BASE_TEXT"
-
 write_file "$HOME/.config/waybar/colors.css" "@define-color bg $BASE_BG;
 @define-color bg2 $BASE_SURFACE;
 @define-color fg $BASE_TEXT;
@@ -210,6 +194,55 @@ write_file "$HOME/.config/wofi/style.css" "window {
 #img {
   margin-right: 8px;
 }"
+
+write_file "$HOME/.config/alacritty/themes/$theme.toml" "[colors.primary]
+background = \"$BASE_BG\"
+foreground = \"$BASE_TEXT\"
+
+[colors.cursor]
+text = \"${BASE_CURSOR_TEXT:-$BASE_BG}\"
+cursor = \"$BASE_TEXT\"
+
+[colors.selection]
+text = \"${BASE_SELECTION_FG:-$BASE_TEXT}\"
+background = \"${BASE_SELECTION_BG:-$BASE_ACCENT_ALT}\"
+
+[colors.normal]
+black = \"${BASE_BLACK:-$BASE_SHADOW}\"
+red = \"${BASE_RED:-$BASE_ACCENT}\"
+green = \"${BASE_GREEN:-$BASE_NEUTRAL}\"
+yellow = \"${BASE_YELLOW:-$BASE_ACCENT}\"
+blue = \"${BASE_BLUE:-$BASE_ACCENT}\"
+magenta = \"${BASE_MAGENTA:-$BASE_ACCENT_ALT}\"
+cyan = \"${BASE_CYAN:-$BASE_ACCENT_ALT}\"
+white = \"$BASE_TEXT\"
+
+[colors.bright]
+black = \"${BASE_BRIGHT_BLACK:-$BASE_EDGE}\"
+red = \"${BASE_BRIGHT_RED:-$BASE_ACCENT}\"
+green = \"${BASE_BRIGHT_GREEN:-$BASE_NEUTRAL}\"
+yellow = \"${BASE_BRIGHT_YELLOW:-$BASE_ACCENT}\"
+blue = \"${BASE_BRIGHT_BLUE:-$BASE_ACCENT}\"
+magenta = \"${BASE_BRIGHT_MAGENTA:-$BASE_ACCENT_ALT}\"
+cyan = \"${BASE_BRIGHT_CYAN:-$BASE_ACCENT_ALT}\"
+white = \"${BASE_BRIGHT_WHITE:-$BASE_TEXT}\""
+
+active_link="$HOME/.config/alacritty/themes/active.toml"
+active_target="$HOME/.config/alacritty/themes/$theme.toml"
+
+if [ "${DOTS_DRY_RUN:-0}" = 1 ]; then
+  printf '[dry-run] link %s -> %s\n' "$active_link" "$active_target"
+else
+  mkdir -p "$(dirname -- "$active_link")"
+  if [ -L "$active_link" ] && [ "$(readlink -- "$active_link")" = "$active_target" ]; then
+    :
+  else
+    if [ -e "$active_link" ] || [ -L "$active_link" ]; then
+      mv "$active_link" "$active_link.backup.$(date +%Y%m%d%H%M%S)"
+    fi
+    ln -s "$active_target" "$active_link"
+  fi
+fi
 
 write_file "$HOME/.config/opencode/tui.json" "{
   \"\$schema\": \"https://opencode.ai/tui.json\",

@@ -15,7 +15,7 @@
 ## Layout And Behavior
 - Component installers source `bin/dots-lib` and use `dots_link`/`dots_copy`; existing targets are backed up as `*.backup.<timestamp>` before replacement.
 - Theme application writes generated files into `~/.config/hypr`, `~/.config/kitty`, `~/.config/waybar`, and `~/.config/wofi`; do not hand-edit those outputs.
-- `components/theme/install.sh` links the active palette and apply script into `~/.config/theme`; `install.sh --theme` applies the theme.
+- `components/theme/install.sh` links the active palette and apply script into `~/.config/theme`; `install.sh --theme` applies the theme. Alacritty's `live_config_reload = true` (in the shipped alacritty component) auto-picks up the generated `themes/active.toml` symlink on every theme apply.
 - `bin/dots-install-packages` reads plain text package group files and strips comments/whitespace before calling `sudo pacman -S --needed`.
 - `bin/dots-enable-services` enables `NetworkManager`, `bluetooth`, and `sddm` only if the unit exists.
 
