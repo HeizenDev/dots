@@ -94,13 +94,7 @@ Current `--all` behavior:
 
 ## Services
 
-Services are intentionally not enabled by `install.sh --all`. They are enabled explicitly with:
-
-```bash
-./bin/dots services enable
-```
-
-That command enables `NetworkManager`, `bluetooth`, and `sddm` only when their unit files exist.
+`install.sh --all` enables `NetworkManager`, `bluetooth`, and `sddm` and sets `graphical.target` as the default boot target. The desktop session is therefore ready on the next reboot without any further manual steps. The implementation lives in `bin/dots-enable-services` and is also exposed as `./bin/dots services enable` for cases where the user wants to enable services without re-running the full installer.
 
 ## Compatibility Note
 

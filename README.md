@@ -10,11 +10,10 @@ The current installer targets CachyOS/Arch-based systems. From a fresh install w
 
 ```bash
 sudo pacman -Syu --needed git
-git clone git@github.com:HeizenDev/dots.git ~/dots
+git clone git@github.com:DaiverDev/dots.git ~/dots
 cd ~/dots
 ./install.sh --all --dry-run
 ./install.sh --all --yes
-./bin/dots services enable
 reboot
 ```
 
