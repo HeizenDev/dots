@@ -93,3 +93,19 @@ fi
 if [ -n "$theme" ]; then
   "$repo_dir/bin/dots-theme-apply" "$theme"
 fi
+
+# When --all is used, also enable the desktop session services
+# (NetworkManager, bluetooth, sddm) and set graphical.target as the
+# default boot target. This makes the next reboot land in SDDM/Hyprland
+# without any further manual steps.
+if [ -n "$packages" ] && [ -n "$components" ] && [ -n "$theme" ]; then
+  DOTS_DRY_RUN="$dry_run" "$repo_dir/bin/dots-enable-services"
+fi
+
+# Ensure standard XDG user dirs (Desktop, Documents, Downloads, etc.)
+# exist. xdg-user-dirs-update is normally triggered on first graphical
+# login, but running it from the installer means the dirs are ready
+# the moment SDDM starts the desktop session.
+if [ "${dry_run}" != 1 ] && command -v xdg-user-dirs-update >/dev/null 2>&1; then
+  xdg-user-dirs-update >/dev/null 2>&1 || true
+fi
