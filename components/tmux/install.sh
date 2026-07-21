@@ -8,4 +8,6 @@ source "$repo_dir/bin/dots-lib"
 dots_link "$repo_dir/components/tmux/config/tmux.conf" "$HOME/.config/tmux/tmux.conf"
 dots_link "$repo_dir/components/tmux/config/colors.conf" "$HOME/.config/tmux/colors.conf"
 dots_link "$repo_dir/components/tmux/config/ssh_split.sh" "$HOME/.config/tmux/ssh_split.sh"
-chmod +x "$HOME/.config/tmux/ssh_split.sh"
+
+# Make the helper script executable. Use dots_run so --dry-run is honored.
+dots_run chmod +x "$HOME/.config/tmux/ssh_split.sh"
