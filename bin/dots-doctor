@@ -18,6 +18,7 @@ check waybar
 check wofi
 check mako
 check alacritty
+check tmux
 check grim
 check slurp
 check wl-copy

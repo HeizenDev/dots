@@ -6,6 +6,7 @@ waybar
 wofi
 mako
 alacritty
+tmux
 dolphin
 qt5-wayland
 qt6-wayland

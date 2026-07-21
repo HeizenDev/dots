@@ -39,6 +39,7 @@ Current components:
 - `waybar`: Waybar config and style.
 - `wofi`: Wofi launcher config.
 - `alacritty`: Alacritty terminal config (with `live_config_reload = true` and an import that loads the generated theme file).
+- `tmux`: tmux.conf, ssh_split.sh, and a default colors.conf; theme apply regenerates `~/.config/tmux/colors.conf` and `tmux source-file` reloads running sessions.
 - `mako`: Mako notification config.
 - `nvim`: Neovim package installation and LazyVim-based config.
 - `opencode`: Official opencode installer without managed config.
@@ -60,6 +61,7 @@ The theme file defines a `[colors]` table with keys such as `bg`, `text`, `accen
 
 - `~/.config/hypr/colors.conf`
 - `~/.config/alacritty/themes/<theme>.toml` and a `themes/active.toml` symlink
+- `~/.config/tmux/colors.conf`
 - `~/.config/waybar/colors.css`
 - `~/.config/wofi/style.css`
 

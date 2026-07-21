@@ -41,7 +41,7 @@ Install package groups only:
 Install selected components only:
 
 ```bash
-./install.sh --component hypr,waybar,alacritty
+./install.sh --component hypr,waybar,alacritty,tmux
 ```
 
 Apply a theme only:
@@ -63,7 +63,7 @@ The helper command wraps common operations:
 ```bash
 ./bin/dots install all
 ./bin/dots install packages base desktop fonts
-./bin/dots install hypr waybar alacritty
+./bin/dots install hypr waybar alacritty tmux
 ./bin/dots theme list
 ./bin/dots theme current
 ./bin/dots theme apply tokyo-night

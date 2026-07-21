@@ -8,6 +8,7 @@ Components are independently installable units under `components/<name>/`.
 - `waybar`: Waybar JSONC config and CSS style.
 - `wofi`: Wofi launcher config.
 - `alacritty`: Alacritty config with `live_config_reload = true` and an `import` that loads `~/.config/alacritty/themes/active.toml` (a symlink to the active palette's `themes/<theme>.toml`).
+- `tmux`: tmux.conf (sources `~/.config/tmux/colors.conf` for theme colors), ssh_split.sh (the SSH-aware split helper), and a default `colors.conf` (overwritten by `dots theme apply`).
 - `mako`: Notification daemon config.
 - `nvim`: Neovim package installation and local LazyVim-based config.
 - `opencode`: Official opencode installer without repository-managed config.
@@ -47,6 +48,15 @@ Each `components/<name>/install.sh` should:
 6. Run `./install.sh --component <name> --dry-run`.
 
 Components may install their own required packages when a package group is not the right fit. Prefer distro packages for distro-provided tools and keep external installers explicit in the component script.
+
+## Tmux Note
+
+The shipped `components/tmux/config/tmux.conf` sources `~/.config/tmux/colors.conf`
+at the top with `source-file -q`. The default `colors.conf` (also shipped) is
+tokyo-night. `dots theme apply` regenerates `colors.conf`; in a running tmux
+server, run `tmux source-file ~/.config/tmux/tmux.conf` (or press the
+configured `<prefix> r` keybind) to apply the new colors to all open
+sessions.
 
 ## Alacritty Note
 
