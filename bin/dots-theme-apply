@@ -140,7 +140,7 @@ hex() {
 
 link_palette
 
-write_file "$HOME/.config/hypr/colors.conf" "\$themeAccentGradient = rgba($(hex "$BASE_ACCENT_ALT")ee) rgba($(hex "$BASE_ACCENT")ee) 45deg
+write_file "$HOME/.config/hypr/colors.conf" "\$themeAccentGradient = rgba($(hex "$BASE_ACCENT")ee) rgba($(hex "$BASE_ACCENT_ALT")ee) 45deg
 \$themeNeutralLine = rgba($(hex "$BASE_NEUTRAL")aa)
 \$themeShadow = rgba($(hex "$BASE_SHADOW")ee)"
 
