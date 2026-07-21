@@ -44,7 +44,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @bg;
-  background: linear-gradient(90deg, @accent2, @accent);
+  background: linear-gradient(90deg, @accent, @accent2);
 }
 
 #workspaces button.urgent {
@@ -74,7 +74,7 @@ window#waybar {
 
 #clock {
   color: @fg;
-  border-color: @accent2;
+  border-color: @accent;
 }
 
 #cpu,
