@@ -1,10 +1,57 @@
+# Tokyo Night — palette source-aligned with current Alacritty/tmux/Pi setup.
+#
+# Required keys (consumed by hypr, waybar, wofi, opencode, legacy kitty):
+#   bg, surface, text, dim, accent, accent_alt, edge, shadow, neutral
+#
+# Extended keys (consumed by alacritty, tmux, pi; optional with sensible defaults
+# in per-target writers):
+#   cursor_text, selection_bg, selection_fg,
+#   bg_subtle, bg_highlight, fg_muted, fg_gutter, comment,
+#   black, red, green, yellow, blue, magenta, cyan, white,
+#   bright_black, bright_red, bright_green, bright_yellow, bright_blue,
+#   bright_magenta, bright_cyan, bright_white
+
 [colors]
-bg = "#1a1b26"
-surface = "#24283b"
-text = "#c0caf5"
-dim = "#565f89"
-accent = "#7aa2f7"
-accent_alt = "#bb9af7"
-edge = "#414868"
-shadow = "#16161e"
-neutral = "#9aa5ce"
+
+# Core (9)
+bg          = "#1a1b26"
+surface     = "#24283b"
+text        = "#c0caf5"
+dim         = "#565f89"
+accent      = "#7aa2f7"
+accent_alt  = "#bb9af7"
+edge        = "#414868"
+shadow      = "#16161e"
+neutral     = "#9aa5ce"
+
+# Cursor / selection (alacritty)
+cursor_text  = "#1a1b26"
+selection_bg = "#283457"
+selection_fg = "#c0caf5"
+
+# Depth tones (Pi)
+bg_subtle    = "#1f2335"
+bg_highlight = "#292e42"
+fg_muted     = "#a9b1d6"
+fg_gutter    = "#3b4261"
+comment      = "#565f89"
+
+# Terminal ANSI — normal
+black   = "#15161e"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#a9b1d6"
+
+# Terminal ANSI — bright
+bright_black   = "#414868"
+bright_red     = "#f7768e"
+bright_green   = "#9ece6a"
+bright_yellow  = "#e0af68"
+bright_blue    = "#7aa2f7"
+bright_magenta = "#bb9af7"
+bright_cyan    = "#7dcfff"
+bright_white   = "#c0caf5"

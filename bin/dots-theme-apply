@@ -41,6 +41,30 @@ load_theme() {
         edge) BASE_EDGE="$value" ;;
         shadow) BASE_SHADOW="$value" ;;
         neutral) BASE_NEUTRAL="$value" ;;
+        cursor_text) BASE_CURSOR_TEXT="$value" ;;
+        selection_bg) BASE_SELECTION_BG="$value" ;;
+        selection_fg) BASE_SELECTION_FG="$value" ;;
+        bg_subtle) BASE_BG_SUBTLE="$value" ;;
+        bg_highlight) BASE_BG_HIGHLIGHT="$value" ;;
+        fg_muted) BASE_FG_MUTED="$value" ;;
+        fg_gutter) BASE_FG_GUTTER="$value" ;;
+        comment) BASE_COMMENT="$value" ;;
+        black) BASE_BLACK="$value" ;;
+        red) BASE_RED="$value" ;;
+        green) BASE_GREEN="$value" ;;
+        yellow) BASE_YELLOW="$value" ;;
+        blue) BASE_BLUE="$value" ;;
+        magenta) BASE_MAGENTA="$value" ;;
+        cyan) BASE_CYAN="$value" ;;
+        white) BASE_WHITE="$value" ;;
+        bright_black) BASE_BRIGHT_BLACK="$value" ;;
+        bright_red) BASE_BRIGHT_RED="$value" ;;
+        bright_green) BASE_BRIGHT_GREEN="$value" ;;
+        bright_yellow) BASE_BRIGHT_YELLOW="$value" ;;
+        bright_blue) BASE_BRIGHT_BLUE="$value" ;;
+        bright_magenta) BASE_BRIGHT_MAGENTA="$value" ;;
+        bright_cyan) BASE_BRIGHT_CYAN="$value" ;;
+        bright_white) BASE_BRIGHT_WHITE="$value" ;;
       esac
     fi
   done < "$theme_file"

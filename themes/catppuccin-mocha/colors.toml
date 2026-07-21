@@ -1,10 +1,57 @@
+# Catppuccin Mocha — standard hex values from catppuccin/catppuccin.
+#
+# Required keys (consumed by hypr, waybar, wofi, opencode, legacy kitty):
+#   bg, surface, text, dim, accent, accent_alt, edge, shadow, neutral
+#
+# Extended keys (consumed by alacritty, tmux, pi; optional with sensible defaults
+# in per-target writers):
+#   cursor_text, selection_bg, selection_fg,
+#   bg_subtle, bg_highlight, fg_muted, fg_gutter, comment,
+#   black, red, green, yellow, blue, magenta, cyan, white,
+#   bright_black, bright_red, bright_green, bright_yellow, bright_blue,
+#   bright_magenta, bright_cyan, bright_white
+
 [colors]
-bg = "#1e1e2e"
-surface = "#313244"
-text = "#cdd6f4"
-dim = "#7f849c"
-accent = "#89b4fa"
-accent_alt = "#cba6f7"
-edge = "#45475a"
-shadow = "#11111b"
-neutral = "#a6adc8"
+
+# Core (9)
+bg          = "#1e1e2e"
+surface     = "#313244"
+text        = "#cdd6f4"
+dim         = "#7f849c"
+accent      = "#89b4fa"
+accent_alt  = "#cba6f7"
+edge        = "#45475a"
+shadow      = "#11111b"
+neutral     = "#a6adc8"
+
+# Cursor / selection
+cursor_text  = "#1e1e2e"
+selection_bg = "#45475a"
+selection_fg = "#cdd6f4"
+
+# Depth tones
+bg_subtle    = "#181825"
+bg_highlight = "#585b70"
+fg_muted     = "#bac2de"
+fg_gutter    = "#6c7086"
+comment      = "#7f849c"
+
+# Terminal ANSI — normal
+black   = "#45475a"
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+magenta = "#f5c2e7"
+cyan    = "#94e2d5"
+white   = "#bac2de"
+
+# Terminal ANSI — bright
+bright_black   = "#585b70"
+bright_red     = "#f38ba8"
+bright_green   = "#a6e3a1"
+bright_yellow  = "#f9e2af"
+bright_blue    = "#89b4fa"
+bright_magenta = "#f5c2e7"
+bright_cyan    = "#94e2d5"
+bright_white   = "#cdd6f4"
